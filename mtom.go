@@ -7,13 +7,13 @@ import (
 
 var ErrInvalidInputData = errors.New("mtom: invalid input data")
 
-func FromBytes(src []byte) (dst []byte) {
-	base64.StdEncoding.Encode(dst, src)
-	return
+func FromBytes(src []byte) []byte {
+	return []byte(base64.StdEncoding.EncodeToString(src))
 }
 
-func ToBytes(src []byte) (dst []byte, err error) {
-	if _, err := base64.StdEncoding.Decode(dst, src); err != nil {
+func ToBytes(src []byte) ([]byte, error) {
+	dst, err := base64.StdEncoding.DecodeString(string(src))
+	if err != nil {
 		return nil, ErrInvalidInputData
 	}
 
